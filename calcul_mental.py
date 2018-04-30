@@ -32,8 +32,10 @@ import time
 
 def main():
 
+    # You will be able to practice indefinitley if you want
     while True:
         ready = input('Ready?')
+        # if answer starts with 'n' or 'N' the program would stop
         if ready.lower().startswith('n'):
             break
         else:
@@ -44,9 +46,9 @@ def main():
             n3 = random.randint(0,9)
             n4 = random.randint(0,9)
 
-            question = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
+            question_string = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
             start_time_sec = time.time()
-            answer = int(input(question))
+            answer = int(input(question_string))
             lap_time_sec = time.time() - start_time_sec
 
             if (base + n1 + n2 + n3 + n4) == answer:
