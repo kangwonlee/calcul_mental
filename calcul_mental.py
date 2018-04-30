@@ -1,3 +1,31 @@
+"""
+Mental Calculation Practice
+
+Kangwon Lee
+
+Initally for French Elementary School Students but anyone can use.
+
+How to use:
+    Please check the following example.
+
+$ python calcul_mental.py
+Ready?
+553 + 0 + 0 + 4 + 2 = ? 559
+Correct
+time = 6.49737 sec
+Ready?n
+
+    The script will first ask whether you are ready. 
+    Entering 'No' or 'non' would stop the program
+    Otherwise, would show a question.
+    Enter your answer in numbers.
+    The program will tell if your answer is correct or not
+    and the calculation time.
+
+Hope this helps.
+"""
+
+
 import random
 import time
 
@@ -29,4 +57,5 @@ def main():
             print('time = %g sec' % (lap_time_sec))
 
 
-main()
+if '__main__' == __name__:
+    main()
