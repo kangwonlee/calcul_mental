@@ -47,15 +47,26 @@ def main():
             n4 = random.randint(0,9)
 
             question_string = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
+
+            # to measure calculation time
             start_time_sec = time.time()
-            answer = int(input(question_string))
+
+            # show question and obtain answer
+            answer_str = input(question_string)
+
+            # to measure calculation time
             lap_time_sec = time.time() - start_time_sec
 
+            # to measure calculation time more exactly
+            answer = int(answer_str)
+
+            # compare the calculations
             if (base + n1 + n2 + n3 + n4) == answer:
                 print('Correct')
             else:
-                print('answer = %d' % (base + n1 + n2 + n3 + n4))
+                print('Expected = %d' % (base + n1 + n2 + n3 + n4))
 
+            # show calculation time
             print('time = %g sec' % (lap_time_sec))
 
 
