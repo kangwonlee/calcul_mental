@@ -1,11 +1,41 @@
+"""
+Mental Calculation Practice
+
+Kangwon Lee
+
+Initally for French Elementary School Students but anyone can use.
+
+How to use:
+    Please check the following example.
+
+$ python calcul_mental.py
+Ready?
+553 + 0 + 0 + 4 + 2 = ? 559
+Correct
+time = 6.49737 sec
+Ready?n
+
+    The script will first ask whether you are ready. 
+    Entering 'No' or 'non' would stop the program
+    Otherwise, would show a question.
+    Enter your answer in numbers.
+    The program will tell if your answer is correct or not
+    and the calculation time.
+
+Hope this helps.
+"""
+
+
 import random
 import time
 
 
 def main():
 
+    # You will be able to practice indefinitley if you want
     while True:
         ready = input('Ready?')
+        # if answer starts with 'n' or 'N' the program would stop
         if ready.lower().startswith('n'):
             break
         else:
@@ -16,17 +46,29 @@ def main():
             n3 = random.randint(0,9)
             n4 = random.randint(0,9)
 
-            question = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
+            question_string = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
+
+            # to measure calculation time
             start_time_sec = time.time()
-            answer = int(input(question))
+
+            # show question and obtain answer
+            answer_str = input(question_string)
+
+            # to measure calculation time
             lap_time_sec = time.time() - start_time_sec
 
+            # to measure calculation time more exactly
+            answer = int(answer_str)
+
+            # compare the calculations
             if (base + n1 + n2 + n3 + n4) == answer:
                 print('Correct')
             else:
-                print('answer = %d' % (base + n1 + n2 + n3 + n4))
+                print('Expected = %d' % (base + n1 + n2 + n3 + n4))
 
+            # show calculation time
             print('time = %g sec' % (lap_time_sec))
 
 
-main()
+if '__main__' == __name__:
+    main()
