@@ -40,11 +40,11 @@ def main():
             break
         else:
             # generate random numbers
-            base = random.randint(0, 999)
-            n1 = random.randint(0,9)
-            n2 = random.randint(0,9)
-            n3 = random.randint(0,9)
-            n4 = random.randint(0,9)
+            base = random.randint(1, 999)
+            n1 = random.randint(1, 9)
+            n2 = random.randint(1, 9)
+            n3 = random.randint(1, 9)
+            n4 = random.randint(1, 9)
 
             question_string = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
 
