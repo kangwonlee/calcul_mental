@@ -26,11 +26,15 @@ Hope this helps.
 """
 
 
+import pprint
 import random
 import time
 
 
 def main():
+
+    # to keep records
+    history = []
 
     # You will be able to practice indefinitley if you want
     while True:
@@ -39,14 +43,24 @@ def main():
         if ready.lower().startswith('n'):
             break
         else:
+
+            # to record this attempt
+            this_one = {}
+            # to preserve this record in the history
+            # this may happen at the end the else block
+            history.append(this_one)
+
             # generate random numbers
-            base = random.randint(0, 999)
-            n1 = random.randint(0,9)
-            n2 = random.randint(0,9)
-            n3 = random.randint(0,9)
-            n4 = random.randint(0,9)
+            base = random.randint(1, 999)
+            n1 = random.randint(1, 9)
+            n2 = random.randint(1, 9)
+            n3 = random.randint(1, 9)
+            n4 = random.randint(1, 9)
 
             question_string = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
+
+            # record question
+            this_one['question'] = question_string
 
             # to measure calculation time
             start_time_sec = time.time()
@@ -54,8 +68,10 @@ def main():
             # show question and obtain answer
             answer_str = input(question_string)
 
-            # to measure calculation time
-            lap_time_sec = time.time() - start_time_sec
+            # to measure and record calculation time
+            this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
+            # record answer ; int() may fail
+            this_one['answer'] = answer_str
 
             # to measure calculation time more exactly
             answer = int(answer_str)
@@ -63,11 +79,22 @@ def main():
             # compare the calculations
             if (base + n1 + n2 + n3 + n4) == answer:
                 print('Correct')
+                # record result
+                this_one['result'] = 'correct'
             else:
                 print('Expected = %d' % (base + n1 + n2 + n3 + n4))
+                # record result
+                this_one['result'] = 'could do better'
 
             # show calculation time
             print('time = %g sec' % (lap_time_sec))
+
+    print('Thanks for trying.\n'
+          'You will do even better next time.')
+    if history:
+        # present history if not empty
+        # because it can be long, using pprint.pprint() for now
+        pprint.pprint(history)
 
 
 if '__main__' == __name__:
