@@ -33,6 +33,7 @@ import time
 
 def main():
 
+    # to keep records
     history = []
 
     # You will be able to practice indefinitley if you want
@@ -43,7 +44,10 @@ def main():
             break
         else:
 
+            # to record this attempt
             this_one = {}
+            # to preserve this record in the history
+            # this may happen at the end the else block
             history.append(this_one)
 
             # generate random numbers
@@ -55,6 +59,7 @@ def main():
 
             question_string = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
 
+            # record question
             this_one['question'] = question_string
 
             # to measure calculation time
@@ -63,8 +68,9 @@ def main():
             # show question and obtain answer
             answer_str = input(question_string)
 
-            # to measure calculation time
+            # to measure and record calculation time
             this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
+            # record answer ; int() may fail
             this_one['answer'] = answer_str
 
             # to measure calculation time more exactly
@@ -73,9 +79,11 @@ def main():
             # compare the calculations
             if (base + n1 + n2 + n3 + n4) == answer:
                 print('Correct')
+                # record result
                 this_one['result'] = 'correct'
             else:
                 print('Expected = %d' % (base + n1 + n2 + n3 + n4))
+                # record result
                 this_one['result'] = 'could do better'
 
             # show calculation time
@@ -84,6 +92,8 @@ def main():
     print('Thanks for trying.\n'
           'You will do even better next time.')
     if history:
+        # present history if not empty
+        # because it can be long, using pprint.pprint() for now
         pprint.pprint(history)
 
 
