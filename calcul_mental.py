@@ -54,6 +54,14 @@ def main():
     # to keep records
     history = []
 
+    # for variable challange level
+    n_addend = 4
+    min_addend = 1
+    max_addend = 9
+
+    # keep track of student's achievement
+    doing_great = 0
+
     # You will be able to practice indefinitley if you want
     while True:
         ready = input('Ready?')
@@ -68,14 +76,20 @@ def main():
             # this may happen at the end the else block
             history.append(this_one)
 
-            # generate random numbers
-            base = random.randint(1, 999)
-            n1 = random.randint(1, 9)
-            n2 = random.randint(1, 9)
-            n3 = random.randint(1, 9)
-            n4 = random.randint(1, 9)
+            # generate augend
+            question_list = [random.randint(1, 999)]
 
-            question_string = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
+            # revise challenge level
+            n_addend, min_addend, max_addend, doing_great = revise_challenge(n_addend, min_addend, max_addend, doing_great)
+
+            # generate addends
+            question_list += generate_addends(n_addend, min_addend, max_addend)
+
+            # to generate the question using str.join()
+            question_string_list = [str(q) for q in question_list]
+
+            # generate the question
+            question_string = ' + '.join(question_string_list)
 
             # record question
             this_one['question'] = question_string
@@ -89,7 +103,7 @@ def main():
             while not answer:
 
                 # show question and obtain answer
-                answer_str = input(question_string)
+                answer_str = input(question_string + ' = ? ')
 
                 # to measure and record calculation time
                 this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
@@ -104,10 +118,13 @@ def main():
 
                 # to retry if not correct, evaluate in the while loop
                 # compare the calculations
-                if (base + n1 + n2 + n3 + n4) == answer:
+                if sum(question_list) == answer:
                     print('Correct')
                     # record result
                     this_one['result'] = 'correct'
+
+                    # This student is doing great
+                    doing_great += 1
                 else:
                     # to retry if not correct
                     answer = False
@@ -116,6 +133,9 @@ def main():
                     # Retry message for unexpected answers
                     print('%r does not seem to be a valid answer.\n'
                           'Please try again :)' % (answer_str))
+
+                    # This student will be doing great
+                    doing_great += -1
 
             # show calculation time
             print('time = %g sec' % (lap_time_sec))
@@ -126,6 +146,69 @@ def main():
         # present history if not empty
         # because it can be long, using pprint.pprint() for now
         pprint.pprint(history)
+    
+    return history
+
+
+def generate_addends(n_addend, minimum=1, maximum=9):
+    """
+    n_addend : number of addends
+    minimum : minimum of an addend. 1 by default
+    maximum : maximum of an addend. 9 by default
+    """
+
+    # generate addends
+    addends_list = []
+
+    for _ in range(n_addend):
+        addends_list.append(random.randint(1, 9))
+
+    return addends_list
+
+
+def revise_challenge(n_addend, min_addend, max_addend, doing_great):
+
+    # if a student is doing great, make the problem slightly more challenging
+    if 5 < doing_great:
+        min_addend = get_min(doing_great)
+
+        # if a student seems doing consistently good, increase the number of addends
+        if 4 < min_addend:
+            n_addend += 1
+            # reset other challenge level parameters
+            doing_great, max_addend, min_addend = reset_all_level_params(doing_great, min_addend, max_addend)
+
+    # if a student is not doing great, make the problem slightly more comfortable
+    elif -4 > doing_great :
+        if 6 < max_addend :
+            max_addend = 6
+            doing_great = reset_doing_great(doing_great)
+        else:
+            max_addend += (-1)
+            doing_great = reset_doing_great(doing_great)
+
+        if 5 > max_addend:
+            n_addend = max((1, n_addend - 1))
+            # reset other challenge level parameters
+            doing_great, max_addend, min_addend = reset_all_level_params(doing_great, min_addend, max_addend)
+
+    return n_addend, min_addend, max_addend, doing_great
+
+
+def get_min(doing_great):
+    return (doing_great // 3) + 1
+
+
+def reset_all_level_params(doing_great, min_addend, max_addend):
+    doing_great = reset_doing_great(doing_great)
+    min_addend = 1
+    max_addend = 9
+    return doing_great, max_addend, min_addend
+
+
+def reset_doing_great(doing_great):
+    doing_great = int(doing_great * 0.8)
+    return doing_great
 
 
 if '__main__' == __name__:
