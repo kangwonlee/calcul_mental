@@ -103,7 +103,7 @@ def main():
             while not answer:
 
                 # show question and obtain answer
-                answer_str = input(question_string + ' = ?')
+                answer_str = input(question_string + ' = ? ')
 
                 # to measure and record calculation time
                 this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
