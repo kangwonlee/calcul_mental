@@ -54,6 +54,10 @@ def main():
     # to keep records
     history = []
 
+    # for variable challange level
+    # number of addends
+    n_addend = 4
+
     # You will be able to practice indefinitley if you want
     while True:
         ready = input('Ready?')
@@ -68,14 +72,18 @@ def main():
             # this may happen at the end the else block
             history.append(this_one)
 
-            # generate random numbers
-            base = random.randint(1, 999)
-            n1 = random.randint(1, 9)
-            n2 = random.randint(1, 9)
-            n3 = random.randint(1, 9)
-            n4 = random.randint(1, 9)
+            # generate augend
+            question_list = [random.randint(1, 999)]
 
-            question_string = '%d + %d + %d + %d + %d = ? ' % (base, n1, n2, n3, n4)
+            # generate addends
+            for _ in range(n_addend):
+                question_list.append(random.randint(1, 9))
+
+            # to generate the question using str.join()
+            question_string_list = [str(q) for q in question_list]
+
+            # generate the question
+            question_string = ' + '.join(question_string_list)
 
             # record question
             this_one['question'] = question_string
@@ -89,7 +97,7 @@ def main():
             while not answer:
 
                 # show question and obtain answer
-                answer_str = input(question_string)
+                answer_str = input(question_string + ' = ?')
 
                 # to measure and record calculation time
                 this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
@@ -104,7 +112,7 @@ def main():
 
                 # to retry if not correct, evaluate in the while loop
                 # compare the calculations
-                if (base + n1 + n2 + n3 + n4) == answer:
+                if sum(question_list) == answer:
                     print('Correct')
                     # record result
                     this_one['result'] = 'correct'
