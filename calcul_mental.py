@@ -65,16 +65,26 @@ def main():
             # to measure calculation time
             start_time_sec = time.time()
 
-            # show question and obtain answer
-            answer_str = input(question_string)
+            # to handle various inputs ( you sort of know what these means ;) )
+            answer = False
 
-            # to measure and record calculation time
-            this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
-            # record answer ; int() may fail
-            this_one['answer'] = answer_str
+            while not answer:
 
-            # to measure calculation time more exactly
-            answer = int(answer_str)
+                # show question and obtain answer
+                answer_str = input(question_string)
+
+                # to measure and record calculation time
+                this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
+                # record answer ; int() may fail
+                this_one['answer'] = answer_str
+
+                try:
+                    # to measure calculation time more exactly, convert to int here
+                    answer = int(answer_str)
+                except ValueError:
+                    print('%r does not seem to be a valid answer to :%r\n'
+                          'Please try again :)' % (answer_str, question_string))
+                    answer = False
 
             # compare the calculations
             if (base + n1 + n2 + n3 + n4) == answer:
