@@ -25,3 +25,32 @@ class testCalculMental(unittest.TestCase):
                     self.assertGreater(abs(d), abs(new_d))
                     self.assertEqual(1, new_n)
                     self.assertEqual(9, new_x)
+
+
+    def test_get_min(self):
+
+        # The result of get_min() would be the same or increasing as d increases
+
+        # use smaller intial number
+        prev_min = -1
+        for d in range(100+1):
+            # function under test
+            new_min = calcul_mental.get_min(d)
+
+            # test
+            self.assertLessEqual(prev_min, new_min)
+
+            # update prev_min
+            prev_min = new_min
+
+        # use smaller intial number
+        prev_min = -100
+        for d in range(-100, 0):
+            # function under test
+            new_min = calcul_mental.get_min(d)
+
+            # test
+            self.assertLessEqual(prev_min, new_min)
+
+            # update prev_min
+            prev_min = new_min
