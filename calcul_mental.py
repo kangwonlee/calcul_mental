@@ -170,7 +170,7 @@ def revise_challenge(n_addend, min_addend, max_addend, doing_great):
 
     # if a student is doing great, make the problem slightly more challenging
     if 5 < doing_great:
-        min_addend = max(((doing_great + 1) // 5, 2))
+        min_addend = get_min(doing_great)
 
         # if a student seems doing consistently good, increase the number of addends
         if 4 < min_addend:
@@ -193,6 +193,10 @@ def revise_challenge(n_addend, min_addend, max_addend, doing_great):
             doing_great, max_addend, min_addend = reset_all_level_params(doing_great, min_addend, max_addend)
 
     return n_addend, min_addend, max_addend, doing_great
+
+
+def get_min(doing_great):
+    return max(((doing_great + 1) // 5, 2))
 
 
 def reset_all_level_params(doing_great, min_addend, max_addend):
