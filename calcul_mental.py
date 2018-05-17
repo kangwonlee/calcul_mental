@@ -6,14 +6,6 @@ Kangwon Lee
 Initally for French Elementary School Students but anyone can use.
 
 How to use:
-    Please check the following example.
-
-$ python calcul_mental.py
-Ready?
-553 + 0 + 0 + 4 + 2 = ? 559
-Correct
-time = 6.49737 sec
-Ready?n
 
     The script will first ask whether you are ready. 
     Entering 'No' or 'non' would stop the program
@@ -21,6 +13,32 @@ Ready?n
     Enter your answer in numbers.
     The program will tell if your answer is correct or not
     and the calculation time.
+
+    Please check the following example:
+
+$ python calcul_mental.py
+Ready?
+115 + 9 + 5 + 5 + 7 = ? 141
+Correct
+time = 26.2807 sec
+Ready?
+262 + 5 + 4 + 8 + 1 = ? 180
+'180' does not seem to be a valid answer.
+Please try again :)
+262 + 5 + 4 + 8 + 1 = ? 280
+Correct
+time = 15.6669 sec
+Ready?n
+Thanks for trying.
+You will do even better next time.
+[{'answer': '141',
+  'lap time': 26.280706882476807,
+  'question': '115 + 9 + 5 + 5 + 7 = ? ',
+  'result': 'correct'},
+ {'answer': '280',
+  'lap time': 15.666854858398438,
+  'question': '262 + 5 + 4 + 8 + 1 = ? ',
+  'result': 'correct'}]
 
 Hope this helps.
 """
@@ -65,26 +83,39 @@ def main():
             # to measure calculation time
             start_time_sec = time.time()
 
-            # show question and obtain answer
-            answer_str = input(question_string)
+            # to give students more opportunities
+            answer = False
 
-            # to measure and record calculation time
-            this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
-            # record answer ; int() may fail
-            this_one['answer'] = answer_str
+            while not answer:
 
-            # to measure calculation time more exactly
-            answer = int(answer_str)
+                # show question and obtain answer
+                answer_str = input(question_string)
 
-            # compare the calculations
-            if (base + n1 + n2 + n3 + n4) == answer:
-                print('Correct')
-                # record result
-                this_one['result'] = 'correct'
-            else:
-                print('Expected = %d' % (base + n1 + n2 + n3 + n4))
-                # record result
-                this_one['result'] = 'could do better'
+                # to measure and record calculation time
+                this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
+                # record answer ; int() may fail
+                this_one['answer'] = answer_str
+
+                try:
+                    # to measure calculation time more exactly, convert to int here
+                    answer = int(answer_str)
+                except ValueError:
+                    answer = False
+
+                # to retry if not correct, evaluate in the while loop
+                # compare the calculations
+                if (base + n1 + n2 + n3 + n4) == answer:
+                    print('Correct')
+                    # record result
+                    this_one['result'] = 'correct'
+                else:
+                    # to retry if not correct
+                    answer = False
+                    # record result, believing the student could give correct answer later
+                    this_one['result'] = 'could do better'
+                    # Retry message for unexpected answers
+                    print('%r does not seem to be a valid answer.\n'
+                          'Please try again :)' % (answer_str))
 
             # show calculation time
             print('time = %g sec' % (lap_time_sec))
