@@ -79,8 +79,7 @@ def main():
             question_list = [random.randint(1, 999)]
 
             # generate addends
-            for _ in range(n_addend):
-                question_list.append(random.randint(1, 9))
+            question_list += generate_addends(n_addend)
 
             # to generate the question using str.join()
             question_string_list = [str(q) for q in question_list]
@@ -145,6 +144,22 @@ def main():
         pprint.pprint(history)
     
     return history
+
+
+def generate_addends(n_addend, minimum=1, maximum=9):
+    """
+    n_addend : number of addends
+    minimum : minimum of an addend. 1 by default
+    maximum : maximum of an addend. 9 by default
+    """
+
+    # generate addends
+    addends_list = []
+
+    for _ in range(n_addend):
+        addends_list.append(random.randint(1, 9))
+
+    return addends_list
 
 
 if '__main__' == __name__:
