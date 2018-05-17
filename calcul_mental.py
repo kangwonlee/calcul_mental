@@ -65,7 +65,7 @@ def main():
             # to measure calculation time
             start_time_sec = time.time()
 
-            # to handle various inputs ( you sort of know what these means ;) )
+            # to give students more opportunities
             answer = False
 
             while not answer:
@@ -82,19 +82,22 @@ def main():
                     # to measure calculation time more exactly, convert to int here
                     answer = int(answer_str)
                 except ValueError:
-                    print('%r does not seem to be a valid answer to :%r\n'
-                          'Please try again :)' % (answer_str, question_string))
                     answer = False
 
-            # compare the calculations
-            if (base + n1 + n2 + n3 + n4) == answer:
-                print('Correct')
-                # record result
-                this_one['result'] = 'correct'
-            else:
-                print('Expected = %d' % (base + n1 + n2 + n3 + n4))
-                # record result
-                this_one['result'] = 'could do better'
+                # to retry if not correct, evaluate in the while loop
+                # compare the calculations
+                if (base + n1 + n2 + n3 + n4) == answer:
+                    print('Correct')
+                    # record result
+                    this_one['result'] = 'correct'
+                else:
+                    # to retry if not correct
+                    answer = False
+                    # record result, believing the student could give correct answer later
+                    this_one['result'] = 'could do better'
+                    # Retry message for unexpected answers
+                    print('%r does not seem to be a valid answer.\n'
+                          'Please try again :)' % (answer_str))
 
             # show calculation time
             print('time = %g sec' % (lap_time_sec))
