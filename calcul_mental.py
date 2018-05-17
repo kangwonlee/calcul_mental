@@ -103,7 +103,7 @@ def main():
             while not answer:
 
                 # show question and obtain answer
-                answer_str = input(question_string + ' = ?')
+                answer_str = input(question_string + ' = ? ')
 
                 # to measure and record calculation time
                 this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
@@ -196,7 +196,7 @@ def revise_challenge(n_addend, min_addend, max_addend, doing_great):
 
 
 def get_min(doing_great):
-    return max(((doing_great + 1) // 5, 2))
+    return (doing_great // 3) + 1
 
 
 def reset_all_level_params(doing_great, min_addend, max_addend):
