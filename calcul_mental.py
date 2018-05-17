@@ -65,26 +65,39 @@ def main():
             # to measure calculation time
             start_time_sec = time.time()
 
-            # show question and obtain answer
-            answer_str = input(question_string)
+            # to give students more opportunities
+            answer = False
 
-            # to measure and record calculation time
-            this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
-            # record answer ; int() may fail
-            this_one['answer'] = answer_str
+            while not answer:
 
-            # to measure calculation time more exactly
-            answer = int(answer_str)
+                # show question and obtain answer
+                answer_str = input(question_string)
 
-            # compare the calculations
-            if (base + n1 + n2 + n3 + n4) == answer:
-                print('Correct')
-                # record result
-                this_one['result'] = 'correct'
-            else:
-                print('Expected = %d' % (base + n1 + n2 + n3 + n4))
-                # record result
-                this_one['result'] = 'could do better'
+                # to measure and record calculation time
+                this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
+                # record answer ; int() may fail
+                this_one['answer'] = answer_str
+
+                try:
+                    # to measure calculation time more exactly, convert to int here
+                    answer = int(answer_str)
+                except ValueError:
+                    answer = False
+
+                # to retry if not correct, evaluate in the while loop
+                # compare the calculations
+                if (base + n1 + n2 + n3 + n4) == answer:
+                    print('Correct')
+                    # record result
+                    this_one['result'] = 'correct'
+                else:
+                    # to retry if not correct
+                    answer = False
+                    # record result, believing the student could give correct answer later
+                    this_one['result'] = 'could do better'
+                    # Retry message for unexpected answers
+                    print('%r does not seem to be a valid answer.\n'
+                          'Please try again :)' % (answer_str))
 
             # show calculation time
             print('time = %g sec' % (lap_time_sec))
