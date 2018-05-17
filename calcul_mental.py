@@ -3,7 +3,7 @@ Mental Calculation Practice
 
 Kangwon Lee
 
-Initally for French Elementary School Students but anyone can use.
+Initally for French Elementary School Students but anyone can try.
 
 How to use:
 
