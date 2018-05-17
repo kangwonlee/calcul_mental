@@ -55,8 +55,9 @@ def main():
     history = []
 
     # for variable challange level
-    # number of addends
     n_addend = 4
+    min_addend = 1
+    max_addend = 9
 
     # keep track of student's achievement
     doing_great = 0
@@ -78,8 +79,11 @@ def main():
             # generate augend
             question_list = [random.randint(1, 999)]
 
+            # revise challenge level
+            n_addend, min_addend, max_addend, doing_great = revise_challenge(n_addend, min_addend, max_addend, doing_great)
+
             # generate addends
-            question_list += generate_addends(n_addend)
+            question_list += generate_addends(n_addend, min_addend, max_addend)
 
             # to generate the question using str.join()
             question_string_list = [str(q) for q in question_list]
@@ -160,6 +164,47 @@ def generate_addends(n_addend, minimum=1, maximum=9):
         addends_list.append(random.randint(1, 9))
 
     return addends_list
+
+
+def revise_challenge(n_addend, min_addend, max_addend, doing_great):
+
+    # if a student is doing great, make the problem slightly more challenging
+    if 5 < doing_great:
+        min_addend = max(((doing_great + 1) // 5, 2))
+
+        # if a student seems doing consistently good, increase the number of addends
+        if 4 < min_addend:
+            n_addend += 1
+            # reset other challenge level parameters
+            doing_great, max_addend, min_addend = reset_all_level_params(doing_great, min_addend, max_addend)
+
+    # if a student is not doing great, make the problem slightly more comfortable
+    elif -4 > doing_great :
+        if 6 < max_addend :
+            max_addend = 6
+            doing_great = reset_doing_great(doing_great)
+        else:
+            max_addend += (-1)
+            doing_great = reset_doing_great(doing_great)
+
+        if 5 > max_addend:
+            n_addend = max((1, n_addend - 1))
+            # reset other challenge level parameters
+            doing_great, max_addend, min_addend = reset_all_level_params(doing_great, min_addend, max_addend)
+
+    return n_addend, min_addend, max_addend, doing_great
+
+
+def reset_all_level_params(doing_great, min_addend, max_addend):
+    doing_great = reset_doing_great(doing_great)
+    min_addend = 1
+    max_addend = 9
+    return doing_great, max_addend, min_addend
+
+
+def reset_doing_great(doing_great):
+    doing_great = int(doing_great * 0.8)
+    return doing_great
 
 
 if '__main__' == __name__:
