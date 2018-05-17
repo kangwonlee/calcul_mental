@@ -58,6 +58,9 @@ def main():
     # number of addends
     n_addend = 4
 
+    # keep track of student's achievement
+    doing_great = 0
+
     # You will be able to practice indefinitley if you want
     while True:
         ready = input('Ready?')
@@ -116,6 +119,9 @@ def main():
                     print('Correct')
                     # record result
                     this_one['result'] = 'correct'
+
+                    # This student is doing great
+                    doing_great += 1
                 else:
                     # to retry if not correct
                     answer = False
@@ -124,6 +130,9 @@ def main():
                     # Retry message for unexpected answers
                     print('%r does not seem to be a valid answer.\n'
                           'Please try again :)' % (answer_str))
+
+                    # This student will be doing great
+                    doing_great += -1
 
             # show calculation time
             print('time = %g sec' % (lap_time_sec))
