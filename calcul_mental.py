@@ -143,6 +143,8 @@ def main():
         # present history if not empty
         # because it can be long, using pprint.pprint() for now
         pprint.pprint(history)
+    
+    return history
 
 
 if '__main__' == __name__:
