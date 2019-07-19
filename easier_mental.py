@@ -100,7 +100,7 @@ def will_do_better(this_one, answer_str, doing_great):
     answer = False
 
     this_one['result'] = 'could do better'
-    print(f'{answer_str} does not seem to be a valid answer.\n'
+    print(f'{repr(answer_str)} does not seem to be a valid answer.\n'
         'Please try again :)')
 
     return answer, doing_great + (-1)
