@@ -97,6 +97,9 @@ def is_ready():
         elif ready.startswith('y'):
             result = True
             break
+        elif not ready:
+            result = True
+            break
         else:
             print('yes or no please?')
 
