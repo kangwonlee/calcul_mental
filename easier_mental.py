@@ -48,16 +48,22 @@ def main():
                 this_one['result'] = 'correct'
                 doing_great += 1
             else:
-                answer = False
-                this_one['result'] = 'could do better'
-                print(f'{answer_str} does not seem to be a valid answer.\n'
-                    'Please try again :)')
-                doing_great += -1
+                answer, doing_great = will_do_better(this_one, answer_str, doing_great)
         print('time = %g sec' % (lap_time_sec))
 
     finish(history)
 
     return history
+
+
+def will_do_better(this_one, answer_str, doing_great):
+    answer = False
+
+    this_one['result'] = 'could do better'
+    print(f'{answer_str} does not seem to be a valid answer.\n'
+        'Please try again :)')
+
+    return answer, doing_great + (-1)
 
 
 def finish(history):
