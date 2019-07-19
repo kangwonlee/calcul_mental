@@ -8,9 +8,18 @@ def main():
     history = []
 
     # for variable challange level
-    n_numbers = 2
-    min_number = 2
-    max_number = 9
+    config = {
+        'n_numbers': 2,
+        'min_number': 2,
+        'max_number': 9,
+        'operations': [
+            {
+                'name': 'mul', 
+                'answer': lambda xy: xy[0] * xy[1], 
+                'question_str': lambda xy:f"{xy[0]} * {xy[1]}",
+            },
+        ],
+    }
 
     # keep track of student's achievement
     doing_great = 0
@@ -20,11 +29,9 @@ def main():
 
         history.append(this_one)
 
-        operand_list = [random.randint(min_number, max_number) for i in range(n_numbers)]
+        question_dict = get_question(config)
 
-        question_string = ' * '.join(str(q) for q in operand_list)
-
-        this_one['question'] = question_string
+        this_one['question'] = question_dict['question_string']
 
         start_time_sec = time.time()
 
@@ -32,7 +39,7 @@ def main():
 
         while not answer:
 
-            answer_str = input(question_string + ' = ? ')
+            answer_str = input(question_dict['question_string'] + ' = ? ')
 
             this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
             this_one['answer'] = answer_str
@@ -43,7 +50,7 @@ def main():
             except ValueError:
                 answer = False
 
-            if is_correct(operand_list, answer):
+            if is_correct(question_dict, answer):
                 doing_great = did_great(this_one, doing_great)
             else:
                 answer, doing_great = will_do_better(this_one, answer_str, doing_great)
@@ -54,8 +61,27 @@ def main():
     return history
 
 
-def is_correct(question_list, answer):
-    return (question_list[0] * question_list[1]) == answer
+def get_question(config):
+
+    min_number = config['min_number']
+    max_number = config['max_number']
+    n_numbers = config['n_numbers']
+
+    operand_list = [random.randint(min_number, max_number) for i in range(n_numbers)]
+
+    operation = random.choice(config['operations'])
+
+    question_string = operation['question_str'](operand_list)
+
+    return {
+        'operand_list': operand_list,
+        'operation': operation,
+        'question_string': question_string,
+    }
+
+
+def is_correct(question_dict, answer):
+    return question_dict['operation']['answer'](question_dict['operand_list']) == answer
 
 
 def did_great(this_one, doing_great, smily_face='^3^'):
