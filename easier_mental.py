@@ -43,7 +43,7 @@ def main():
             except ValueError:
                 answer = False
 
-            if (question_list[0] * question_list[1]) == answer:
+            if is_correct(question_list, answer):
                 doing_great = did_great(this_one, doing_great)
             else:
                 answer, doing_great = will_do_better(this_one, answer_str, doing_great)
@@ -52,6 +52,10 @@ def main():
     finish(history)
 
     return history
+
+
+def is_correct(question_list, answer):
+    return (question_list[0] * question_list[1]) == answer
 
 
 def did_great(this_one, doing_great, smily_face='^3^'):
