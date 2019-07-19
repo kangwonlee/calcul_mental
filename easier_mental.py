@@ -20,9 +20,9 @@ def main():
 
         history.append(this_one)
 
-        question_list = [random.randint(min_number, max_number) for i in range(n_numbers)]
+        operand_list = [random.randint(min_number, max_number) for i in range(n_numbers)]
 
-        question_string = ' * '.join(str(q) for q in question_list)
+        question_string = ' * '.join(str(q) for q in operand_list)
 
         this_one['question'] = question_string
 
@@ -43,7 +43,7 @@ def main():
             except ValueError:
                 answer = False
 
-            if is_correct(question_list, answer):
+            if is_correct(operand_list, answer):
                 doing_great = did_great(this_one, doing_great)
             else:
                 answer, doing_great = will_do_better(this_one, answer_str, doing_great)
