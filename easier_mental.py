@@ -3,6 +3,18 @@ import random
 import time
 
 
+class OperationBase(object):
+
+    def __init__(self):
+        pass
+
+    def answer(self, operands):
+        raise NotImplementedError
+
+    def question(self, operands):
+        raise NotImplementedError
+
+
 def main():
     # to keep records
     history = []
