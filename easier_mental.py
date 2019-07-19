@@ -44,9 +44,7 @@ def main():
                 answer = False
 
             if (question_list[0] * question_list[1]) == answer:
-                print('Correct')
-                this_one['result'] = 'correct'
-                doing_great += 1
+                doing_great = did_great(this_one, doing_great)
             else:
                 answer, doing_great = will_do_better(this_one, answer_str, doing_great)
         print('time = %g sec' % (lap_time_sec))
@@ -54,6 +52,13 @@ def main():
     finish(history)
 
     return history
+
+
+def did_great(this_one, doing_great):
+    print('Correct')
+    this_one['result'] = 'correct'
+
+    return doing_great + 1
 
 
 def will_do_better(this_one, answer_str, doing_great):
