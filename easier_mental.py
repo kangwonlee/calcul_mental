@@ -18,6 +18,11 @@ def main():
                 'answer': lambda xy: xy[0] * xy[1], 
                 'question_str': lambda xy:f"{xy[0]} * {xy[1]}",
             },
+            {
+                'name': 'div', 
+                'answer': lambda xy: xy[0], 
+                'question_str': lambda xy:f"{xy[0]*xy[1]} / {xy[1]}",
+            },
         ],
     }
 
