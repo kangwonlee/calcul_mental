@@ -89,7 +89,7 @@ def is_ready():
 
     while True:
 
-        ready = input('Ready? ').strip().lower()
+        ready = input('Ready? ').strip().strip('.').lower()
 
         if ready.startswith('n'):
             result = False
