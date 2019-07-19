@@ -55,14 +55,18 @@ def main():
                 doing_great += -1
         print('time = %g sec' % (lap_time_sec))
 
+    finish(history)
+
+    return history
+
+
+def finish(history):
     print('Thanks for trying.\n'
             'You will do even better next time.')
     if history:
         # present history if not empty
         # because it can be long, using pprint.pprint() for now
         pprint.pprint(history)
-
-    return history
 
 
 def is_ready():
