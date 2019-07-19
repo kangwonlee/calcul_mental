@@ -54,8 +54,8 @@ def main():
     return history
 
 
-def did_great(this_one, doing_great):
-    print('Correct')
+def did_great(this_one, doing_great, smily_face='^3^'):
+    print(f'Correct {smily_face}')
     this_one['result'] = 'correct'
 
     return doing_great + 1
