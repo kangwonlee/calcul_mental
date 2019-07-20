@@ -11,7 +11,7 @@ def main():
     config = {
         'n_numbers': 2,
         'min_number': 2,
-        'max_number': 9,
+        'max_number': 12,
         'operations': [
             {
                 'name': 'mul', 
