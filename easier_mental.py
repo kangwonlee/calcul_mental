@@ -70,9 +70,15 @@ def get_question(config):
 
     min_number = config['min_number']
     max_number = config['max_number']
+
+    pick_list = list(range(min_number, max_number))
+
+    pick_list.remove(5)
+    pick_list.remove(10)
+
     n_numbers = config['n_numbers']
 
-    operand_list = [random.randint(min_number, max_number) for i in range(n_numbers)]
+    operand_list = [random.choice(pick_list) for i in range(n_numbers)]
 
     operation = random.choice(config['operations'])
 
