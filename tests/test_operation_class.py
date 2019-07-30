@@ -1,3 +1,4 @@
+import itertools
 import unittest
 
 import easier_mental
@@ -16,3 +17,10 @@ class TestOperationBase(unittest.TestCase):
 
         for except_this in self.ob.except_these:
             self.assertNotIn(except_this, self.ob.pick_list)
+
+    def test_get_random_number(self):
+        vut = self.ob.get_random_number()
+
+        self.assertIsInstance(vut, int)
+        self.assertGreaterEqual(vut, self.ob.min_number)
+        self.assertLessEqual(vut, self.ob.max_number)
