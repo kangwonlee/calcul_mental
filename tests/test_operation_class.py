@@ -24,3 +24,22 @@ class TestOperationBase(unittest.TestCase):
         self.assertIsInstance(vut, int)
         self.assertGreaterEqual(vut, self.ob.min_number)
         self.assertLessEqual(vut, self.ob.max_number)
+
+
+class TestCancelFraction(unittest.TestCase):
+
+    def setUp(self):
+        self.ob = easier_mental.CancelFraction()
+
+    def tearDown(self):
+        del self.ob
+
+    def test_get_question(self):
+        n_repeat = 1000
+
+        for _ in itertools.repeat(None, n_repeat):
+            xy = self.ob.get_question()
+
+            self.assertEqual(2, len(xy))
+
+            self.assertNotEqual(xy[0], xy[1])
