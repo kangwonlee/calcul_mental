@@ -33,7 +33,7 @@ class OperationBase(object):
     def answer(self, operands):
         raise NotImplementedError
 
-    def get_question_string(self, operands):
+    def get_question_string(self):
         raise NotImplementedError
 
 
