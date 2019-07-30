@@ -67,7 +67,7 @@ class CancelFraction(OperationBase):
         if self.question is None:
             self.get_question()
 
-        return f"{self.question[0]} / {self.question[1]}"
+        return f"{self.question[0]}/{self.question[1]}"
 
 
 def main():
