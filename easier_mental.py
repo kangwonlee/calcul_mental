@@ -24,6 +24,9 @@ class OperationBase(object):
 
         return tuple(pick_list)
 
+    def get_random_number(self):
+        return random.choice(self.pick_list)
+
     def get_random_numbers(self):
         return random.choices(self.pick_list, k=self.n_ints)
 
