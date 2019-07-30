@@ -11,6 +11,18 @@ class OperationBase(object):
 
         self.n_ints = 2
 
+        self.except_these = [5, 10]
+
+        self.pick_list = self.get_pick_list()
+
+    def get_pick_list(self):
+        pick_list = list(range(self.min_number, self.max_number))
+
+        pick_list.remove(5)
+        pick_list.remove(10)
+
+        return tuple(pick_list)
+
     def get_random_numbers(self):
 
         pick_list = list(range(self.min_number, self.max_number))
