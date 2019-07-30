@@ -5,21 +5,22 @@ import time
 
 class OperationBase(object):
 
+    min_number = 2
+    max_number = 9
+    except_these = (5, 10)
+
     def __init__(self):
-        self.min_number = 2
-        self.max_number = 9
 
         self.n_ints = 2
-
-        self.except_these = [5, 10]
-
         self.pick_list = self.get_pick_list()
 
-    def get_pick_list(self):
-        pick_list = list(range(self.min_number, self.max_number))
+    @classmethod
+    def get_pick_list(cls):
+        pick_list = list(range(cls.min_number, cls.max_number))
 
-        pick_list.remove(5)
-        pick_list.remove(10)
+        for except_this in cls.except_these:
+            if except_this in pick_list:
+                pick_list.remove(except_this)
 
         return tuple(pick_list)
 
