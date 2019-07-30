@@ -24,13 +24,7 @@ class OperationBase(object):
         return tuple(pick_list)
 
     def get_random_numbers(self):
-
-        pick_list = list(range(self.min_number, self.max_number))
-
-        pick_list.remove(5)
-        pick_list.remove(10)
-
-        return random.choices(pick_list, k=self.n_ints)
+        return random.choices(self.pick_list, k=self.n_ints)
 
     def answer(self, operands):
         raise NotImplementedError
