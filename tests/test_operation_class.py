@@ -1,3 +1,4 @@
+import fractions
 import itertools
 import os
 import sys
@@ -48,6 +49,21 @@ class TestCancelFraction(unittest.TestCase):
 
             self.assertNotEqual(xy[0], xy[1])
 
+    def test_get_question_string(self):
+        result = self.ob.get_question_string()
+
+        self.assertIsInstance(result, str)
+
+        num_str, den_str = result.split('/')
+
+        msg = '\n'.join([
+            f"\nresult = {result}",
+            f"question = {self.ob.question}"
+        ])
+
+        self.assertEqual(self.ob.question[0], int(num_str), msg=msg)
+        self.assertEqual(self.ob.question[1], int(den_str), msg=msg)
+        
 
 if "__main__" == __name__:
     unittest.main()
