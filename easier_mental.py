@@ -37,6 +37,28 @@ class OperationBase(object):
         raise NotImplementedError
 
 
+class CancelFraction(OperationBase):
+    def __init__(self, n_ints=2):
+        super().__init__(n_ints = n_ints)
+
+        self.question = None
+
+    def get_question(self):
+        xy_set = set(self.get_random_numbers())
+
+        while 2 > len(xy_set):
+            xy_set.add(self.get_random_number())
+
+        xy_list = list(xy_set)
+        xy_list.sort()
+
+        pick = self.get_random_number()
+
+        question = (xy_list[0] * pick, xy_list[1] * pick)
+
+        return question
+
+
 def main():
     # to keep records
     history = []
