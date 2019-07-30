@@ -9,9 +9,9 @@ class OperationBase(object):
     max_number = 9
     except_these = (5, 10)
 
-    def __init__(self):
+    def __init__(self, n_ints=2):
 
-        self.n_ints = 2
+        self.n_ints = n_ints
         self.pick_list = self.get_pick_list()
 
     @classmethod
