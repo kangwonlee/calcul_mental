@@ -6,7 +6,19 @@ import time
 class OperationBase(object):
 
     def __init__(self):
-        pass
+        self.min_number = 2
+        self.max_number = 9
+
+        self.n_ints = 2
+
+    def get_random_numbers(self):
+
+        pick_list = list(range(self.min_number, self.max_number))
+
+        pick_list.remove(5)
+        pick_list.remove(10)
+
+        return random.choices(pick_list, k=self.n_ints)
 
     def answer(self, operands):
         raise NotImplementedError
