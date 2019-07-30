@@ -58,6 +58,8 @@ class CancelFraction(OperationBase):
         # TODO : consider making this more private
         question = (xy_list[0] * pick, xy_list[1] * pick)
 
+        self.question = question
+
         return question
 
     def get_question_string(self, question):
