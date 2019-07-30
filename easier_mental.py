@@ -58,6 +58,9 @@ class CancelFraction(OperationBase):
 
         return question
 
+    def get_question_string(self, question):
+        return f"{question[0]} / {question[1]}"
+
 
 def main():
     # to keep records
