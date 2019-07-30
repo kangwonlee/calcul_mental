@@ -41,6 +41,7 @@ class CancelFraction(OperationBase):
     def __init__(self, n_ints=2):
         super().__init__(n_ints = n_ints)
 
+        # TODO : consider making this a private attribute
         self.question = None
 
     def get_question(self):
@@ -54,6 +55,7 @@ class CancelFraction(OperationBase):
 
         pick = self.get_random_number()
 
+        # TODO : consider making this more private
         question = (xy_list[0] * pick, xy_list[1] * pick)
 
         return question
