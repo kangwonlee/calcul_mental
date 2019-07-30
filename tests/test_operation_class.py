@@ -1,5 +1,9 @@
 import itertools
+import os
+import sys
 import unittest
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)))
 
 import easier_mental
 
@@ -43,3 +47,7 @@ class TestCancelFraction(unittest.TestCase):
             self.assertEqual(2, len(xy))
 
             self.assertNotEqual(xy[0], xy[1])
+
+
+if "__main__" == __name__:
+    unittest.main()
