@@ -64,7 +64,8 @@ class CancelFraction(OperationBase):
 
     def get_question_string(self):
 
-        assert self.question is not None
+        if self.question is None:
+            self.get_question()
 
         return f"{self.question[0]} / {self.question[1]}"
 
