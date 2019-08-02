@@ -78,10 +78,6 @@ class CancelFraction(OperationBase):
         return question
 
     def get_question_string(self):
-
-        if self.question is None:
-            self.get_question()
-
         return f"{self.question[0]}/{self.question[1]}"
 
     @staticmethod
