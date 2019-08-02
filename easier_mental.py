@@ -89,6 +89,14 @@ class CancelFraction(OperationBase):
 
         return fractions.Fraction(removed_rear_space)
 
+    def is_answer_correct(self, answer_str):
+
+        result = self.eval_answer(answer_str)
+
+        expected = fractions.Fraction(self.question[0], self.question[1])
+
+        return expected == result
+
 
 def main():
     # to keep records
