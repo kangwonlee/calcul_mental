@@ -35,11 +35,11 @@ class OperationBase(object):
     def get_random_numbers(self):
         return random.choices(self.pick_list, k=self.n_ints)
 
-    def answer(self, operands):
-        raise NotImplementedError
-
     def get_question(self):
         return None
+
+    def get_answer(self):
+        raise NotImplementedError
 
     def get_question_string(self):
         raise NotImplementedError
@@ -48,7 +48,10 @@ class OperationBase(object):
         return input(self.get_question_string() + ' = ? ')
 
     def is_answer_correct(self, answer_str):
-        raise NotImplementedError
+        result = self.eval_answer(answer_str)
+        expected = self.get_answer()
+
+        return expected == result
 
     @staticmethod
     def eval_answer(answer_str):
@@ -84,13 +87,8 @@ class CancelFraction(OperationBase):
 
         return fractions.Fraction(removed_rear_space)
 
-    def is_answer_correct(self, answer_str):
-
-        result = self.eval_answer(answer_str)
-
-        expected = fractions.Fraction(self.question[0], self.question[1])
-
-        return expected == result
+    def get_answer(self):
+        return fractions.Fraction(self.question[0], self.question[1])
 
 
 class Mul(OperationBase):
@@ -104,11 +102,8 @@ class Mul(OperationBase):
     def eval_answer(answer_str):
         return int(answer_str)
 
-    def is_answer_correct(self, answer_str):
-        result = self.eval_answer(answer_str)
-        expected = self.question[0] * self.question[1]
-
-        return expected == result
+    def get_answer(self):
+        return self.question[0] * self.question[1]
 
 
 class Div(OperationBase):
@@ -122,11 +117,8 @@ class Div(OperationBase):
     def eval_answer(answer_str):
         return int(answer_str)
 
-    def is_answer_correct(self, answer_str):
-        result = self.eval_answer(answer_str)
-        expected = self.question[0]
-
-        return expected == result
+    def get_answer(self):
+        return self.question[0]
 
 
 def main():
