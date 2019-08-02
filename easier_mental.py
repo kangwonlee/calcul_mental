@@ -93,6 +93,24 @@ class CancelFraction(OperationBase):
         return expected == result
 
 
+class Mul(OperationBase):
+    def get_question(self):
+        return self.get_random_numbers()
+
+    def get_question_string(self):
+        return f"{self.question[0]} * {self.question[1]}"
+
+    @staticmethod
+    def eval_answer(answer_str):
+        return int(answer_str)
+
+    def is_answer_correct(self, answer_str):
+        result = self.eval_answer(answer_str)
+        expected = self.question[0] * self.question[1]
+
+        return expected == result
+
+
 def main():
     # to keep records
     history = []
