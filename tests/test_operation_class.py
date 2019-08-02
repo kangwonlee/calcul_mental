@@ -161,5 +161,81 @@ class TestCancelFraction(unittest.TestCase):
         self.assertFalse(result)
 
 
+class TestMul(unittest.TestCase):
+
+    def setUp(self):
+        self.ob = easier_mental.Mul()
+
+    def tearDown(self):
+        del self.ob
+
+    def test_get_question(self):
+        n_repeat = 1000
+
+        for _ in itertools.repeat(None, n_repeat):
+            xy = self.ob.get_question()
+
+            self.assertEqual(2, len(xy))
+
+    def test_get_question_string(self):
+        result = self.ob.get_question_string()
+
+        self.assertIsInstance(result, str)
+
+        num_str, den_str = result.split('*')
+
+        msg = '\n'.join([
+            f"\nresult = {result}",
+            f"question = {self.ob.question}"
+        ])
+
+        self.assertEqual(self.ob.question[0], int(num_str), msg=msg)
+        self.assertEqual(self.ob.question[1], int(den_str), msg=msg)
+
+    def test_eval_answer_no_space(self):
+        num = 3
+        input_str = f"{num}"
+
+        result = self.ob.eval_answer(input_str)
+        expected = num
+
+        self.assertEqual(expected, result)
+
+    def test_eval_answer_front_space(self):
+        num = 3
+        input_str = f" {num}"
+
+        result = self.ob.eval_answer(input_str)
+        expected = num
+
+        self.assertEqual(expected, result)
+
+    def test_is_answer_correct_correct(self):
+        a = 3
+        b = 4
+
+        self.ob.question = (a, b)
+
+        correct_answer = a * b
+        correct_answer_str = str(correct_answer)
+
+        result = self.ob.is_answer_correct(correct_answer_str)
+
+        self.assertTrue(result)
+
+    def test_is_answer_correct_incorrect_den(self):
+        a = 3
+        b = 4
+
+        self.ob.question = (a, b)
+
+        incorrect_answer = a * (b + 1)
+        incorrect_answer_str = str(incorrect_answer)
+
+        result = self.ob.is_answer_correct(incorrect_answer_str)
+
+        self.assertFalse(result)
+
+
 if "__main__" == __name__:
     unittest.main()
