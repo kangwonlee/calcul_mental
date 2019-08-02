@@ -106,16 +106,9 @@ class Mul(OperationBase):
         return self.question[0] * self.question[1]
 
 
-class Div(OperationBase):
-    def get_question(self):
-        return self.get_random_numbers()
-
+class Div(Mul):
     def get_question_string(self):
         return f"{self.question[0] * self.question[1]} / {self.question[1]}"
-
-    @staticmethod
-    def eval_answer(answer_str):
-        return int(answer_str)
 
     def get_answer(self):
         return self.question[0]
