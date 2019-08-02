@@ -1,5 +1,7 @@
+import fractions
 import pprint
 import random
+import re
 import time
 
 
@@ -81,6 +83,15 @@ class CancelFraction(OperationBase):
             self.get_question()
 
         return f"{self.question[0]}/{self.question[1]}"
+
+    @staticmethod
+    def eval_answer(answer_str):
+
+        stripped = answer_str.strip()
+        removed_front_space = re.sub('\\s/', '/', stripped)
+        removed_rear_space = re.sub('/\\s', '/', removed_front_space)
+
+        return fractions.Fraction(removed_rear_space)
 
 
 def main():
