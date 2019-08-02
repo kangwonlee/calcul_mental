@@ -111,7 +111,7 @@ class Div(OperationBase):
         return self.get_random_numbers()
 
     def get_question_string(self):
-        return f"{self.question[0] * self.question[1]} * {self.question[1]}"
+        return f"{self.question[0] * self.question[1]} / {self.question[1]}"
 
     @staticmethod
     def eval_answer(answer_str):
