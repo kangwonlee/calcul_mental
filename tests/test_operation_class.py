@@ -40,7 +40,9 @@ class TestCancelFraction(unittest.TestCase):
         del self.ob
 
     def test_get_question(self):
-        n_repeat = 1000
+        n_repeat = 5
+
+        history = set()
 
         for _ in itertools.repeat(None, n_repeat):
             xy = self.ob.get_question()
@@ -48,6 +50,10 @@ class TestCancelFraction(unittest.TestCase):
             self.assertEqual(2, len(xy))
 
             self.assertNotEqual(xy[0], xy[1])
+
+            self.assertNotIn(xy, history)
+
+            history.add(xy)
 
     def test_get_question_string(self):
         result = self.ob.get_question_string()
