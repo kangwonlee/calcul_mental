@@ -50,6 +50,9 @@ class CancelFraction(OperationBase):
         # TODO : consider making this a private attribute
         self.question = None
 
+        # initialize question
+        self.get_question()
+
     def get_question(self):
         xy_set = set(self.get_random_numbers())
 
