@@ -39,6 +39,9 @@ class OperationBase(object):
     def ask_question(self):
         return input(self.get_question_string() + ' = ? ')
 
+    def is_answer_correct(self, answer_str):
+        raise NotImplementedError
+
 
 class CancelFraction(OperationBase):
     def __init__(self, n_ints=2):
