@@ -19,6 +19,10 @@ class OperationBase(object):
         # TODO : consider making this a private attribute
         self.question = self.get_question()
 
+    def __del__(self):
+        del self.question
+        del self.pick_list
+
     @classmethod
     def get_pick_list(cls):
         pick_list = list(range(cls.min_number, cls.max_number))
