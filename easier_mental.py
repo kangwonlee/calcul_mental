@@ -56,9 +56,6 @@ class OperationBase(object):
 
 
 class CancelFraction(OperationBase):
-    def __init__(self, n_ints=2):
-        super().__init__(n_ints = n_ints)
-
     def get_question(self):
         xy_set = set(self.get_random_numbers())
 
