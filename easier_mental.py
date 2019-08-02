@@ -16,6 +16,9 @@ class OperationBase(object):
         self.n_ints = n_ints
         self.pick_list = self.get_pick_list()
 
+        # TODO : consider making this a private attribute
+        self.question = self.get_question()
+
     @classmethod
     def get_pick_list(cls):
         pick_list = list(range(cls.min_number, cls.max_number))
@@ -35,6 +38,9 @@ class OperationBase(object):
     def answer(self, operands):
         raise NotImplementedError
 
+    def get_question(self):
+        return None
+
     def get_question_string(self):
         raise NotImplementedError
 
@@ -53,12 +59,6 @@ class CancelFraction(OperationBase):
     def __init__(self, n_ints=2):
         super().__init__(n_ints = n_ints)
 
-        # TODO : consider making this a private attribute
-        self.question = None
-
-        # initialize question
-        self.get_question()
-
     def get_question(self):
         xy_set = set(self.get_random_numbers())
 
@@ -72,8 +72,6 @@ class CancelFraction(OperationBase):
 
         # TODO : consider making this more private
         question = (xy_list[0] * pick, xy_list[1] * pick)
-
-        self.question = question
 
         return question
 
