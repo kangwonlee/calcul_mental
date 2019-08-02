@@ -42,6 +42,10 @@ class OperationBase(object):
     def is_answer_correct(self, answer_str):
         raise NotImplementedError
 
+    @staticmethod
+    def eval_answer(answer_str):
+        raise NotImplementedError
+
 
 class CancelFraction(OperationBase):
     def __init__(self, n_ints=2):
