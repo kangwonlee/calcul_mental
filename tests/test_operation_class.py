@@ -104,6 +104,62 @@ class TestCancelFraction(unittest.TestCase):
 
         self.assertEqual(expected, result)
 
+    def test_is_answer_correct_correct(self):
+        num = 3
+        den = 4
+        pick = 5
+
+        self.ob.question = (num * pick, den * pick)
+
+        correct_answer = fractions.Fraction(num, den)
+        correct_answer_str = str(correct_answer)
+
+        result = self.ob.is_answer_correct(correct_answer_str)
+
+        self.assertTrue(result)
+
+    def test_is_answer_correct_incorrect_den(self):
+        num = 3
+        den = 4
+        pick = 5
+
+        self.ob.question = (num * pick, den * pick)
+
+        incorrect_answer = fractions.Fraction(num, den + 1)
+        incorrect_answer_str = str(incorrect_answer)
+
+        result = self.ob.is_answer_correct(incorrect_answer_str)
+
+        self.assertFalse(result)
+
+    def test_is_answer_correct_incorrect_num_den(self):
+        num = 3
+        den = 4
+        pick = 5
+
+        self.ob.question = (num * pick, den * pick)
+
+        incorrect_answer = fractions.Fraction(num + 1, den + 1)
+        incorrect_answer_str = str(incorrect_answer)
+
+        result = self.ob.is_answer_correct(incorrect_answer_str)
+
+        self.assertFalse(result)
+
+    def test_is_answer_correct_incorrect_num(self):
+        num = 3
+        den = 4
+        pick = 5
+
+        self.ob.question = (num * pick, den * pick)
+
+        incorrect_answer = fractions.Fraction(num + 1, den)
+        incorrect_answer_str = str(incorrect_answer)
+
+        result = self.ob.is_answer_correct(incorrect_answer_str)
+
+        self.assertFalse(result)
+
 
 if "__main__" == __name__:
     unittest.main()
