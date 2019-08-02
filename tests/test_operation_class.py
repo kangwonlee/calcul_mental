@@ -63,7 +63,47 @@ class TestCancelFraction(unittest.TestCase):
 
         self.assertEqual(self.ob.question[0], int(num_str), msg=msg)
         self.assertEqual(self.ob.question[1], int(den_str), msg=msg)
-        
+
+    def test_eval_answer_no_space(self):
+        num = 3
+        den = 4
+        input_str = f"{num}/{den}"
+
+        result = self.ob.eval_answer(input_str)
+        expected = fractions.Fraction(num, den)
+
+        self.assertEqual(expected, result)
+
+    def test_eval_answer_front_space(self):
+        num = 3
+        den = 4
+        input_str = f"{num} /{den}"
+
+        result = self.ob.eval_answer(input_str)
+        expected = fractions.Fraction(num, den)
+
+        self.assertEqual(expected, result)
+
+    def test_eval_answer_both_spaces(self):
+        num = 3
+        den = 4
+        input_str = f"{num} / {den}"
+
+        result = self.ob.eval_answer(input_str)
+        expected = fractions.Fraction(num, den)
+
+        self.assertEqual(expected, result)
+
+    def test_eval_answer_rear_space(self):
+        num = 3
+        den = 4
+        input_str = f"{num}/ {den}"
+
+        result = self.ob.eval_answer(input_str)
+        expected = fractions.Fraction(num, den)
+
+        self.assertEqual(expected, result)
+
 
 if "__main__" == __name__:
     unittest.main()
