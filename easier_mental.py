@@ -122,36 +122,20 @@ def main():
     # to keep records
     history = []
 
-    # for variable challange level
-    config = {
-        'n_numbers': 2,
-        'min_number': 2,
-        'max_number': 12,
-        'operations': [
-            {
-                'name': 'mul', 
-                'answer': lambda xy: xy[0] * xy[1], 
-                'question_str': lambda xy:f"{xy[0]} * {xy[1]}",
-            },
-            {
-                'name': 'div', 
-                'answer': lambda xy: xy[0], 
-                'question_str': lambda xy:f"{xy[0]*xy[1]} / {xy[1]}",
-            },
-        ],
-    }
+    operations=(Mul, Div, CancelFraction)
 
     # keep track of student's achievement
     doing_great = 0
 
     while is_ready():
+        random.seed()
         this_one = {}
 
         history.append(this_one)
 
-        question_dict = get_question(config)
+        question_obj = random.choice(operations)()
 
-        this_one['question'] = question_dict['question_string']
+        this_one['question'] = question_obj.get_question_string()
 
         start_time_sec = time.time()
 
@@ -159,19 +143,14 @@ def main():
 
         while not answer:
 
-            answer_str = input(question_dict['question_string'] + ' = ? ')
+            answer_str = question_obj.ask_question()
 
             this_one['lap time'] = lap_time_sec = time.time() - start_time_sec
             this_one['answer'] = answer_str
 
-            try:
-                # to measure calculation time more exactly, convert to int here
-                answer = int(answer_str)
-            except ValueError:
-                answer = False
-
-            if is_correct(question_dict, answer):
+            if question_obj.is_answer_correct(answer_str):
                 doing_great = did_great(this_one, doing_great)
+                answer = True
             else:
                 answer, doing_great = will_do_better(this_one, answer_str, doing_great)
         print('time = %g sec' % (lap_time_sec))
@@ -179,35 +158,6 @@ def main():
     finish(history)
 
     return history
-
-
-def get_question(config):
-
-    min_number = config['min_number']
-    max_number = config['max_number']
-
-    pick_list = list(range(min_number, max_number))
-
-    pick_list.remove(5)
-    pick_list.remove(10)
-
-    n_numbers = config['n_numbers']
-
-    operand_list = [random.choice(pick_list) for i in range(n_numbers)]
-
-    operation = random.choice(config['operations'])
-
-    question_string = operation['question_str'](operand_list)
-
-    return {
-        'operand_list': operand_list,
-        'operation': operation,
-        'question_string': question_string,
-    }
-
-
-def is_correct(question_dict, answer):
-    return question_dict['operation']['answer'](question_dict['operand_list']) == answer
 
 
 def did_great(this_one, doing_great, smily_face='^3^'):
