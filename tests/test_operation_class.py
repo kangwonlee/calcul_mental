@@ -158,6 +158,19 @@ class TestCancelFraction(unittest.TestCase):
 
         self.assertFalse(result)
 
+    def test_is_answer_correct_incorrect_num_den_multiplied(self):
+        num = 3
+        den = 4
+        pick = 5
+
+        self.ob.question = (num * pick, den * pick)
+
+        incorrect_answer_str = f"{num * 2} / {den * 2}"
+
+        result = self.ob.is_answer_correct(incorrect_answer_str)
+
+        self.assertFalse(result)
+
     def test_is_answer_correct_incorrect_num(self):
         num = 3
         den = 4
