@@ -49,6 +49,18 @@ class TestCancelFraction(unittest.TestCase):
 
             self.assertNotEqual(xy[0], xy[1])
 
+            msg_range = ("\n"
+                f"{self.ob.min_number ** 2} <= xy = {xy} <= {self.ob.max_number ** 2}"
+                )
+
+            self.assertLessEqual(xy[0], self.ob.max_number ** 2, msg=msg_range)
+
+            self.assertGreaterEqual(xy[0], self.ob.min_number ** 2, msg=msg_range)
+
+            self.assertLessEqual(xy[1], self.ob.max_number ** 2, msg=msg_range)
+
+            self.assertGreaterEqual(xy[1], self.ob.min_number ** 2, msg=msg_range)
+
     def test_get_question_string(self):
         result = self.ob.get_question_string()
 
