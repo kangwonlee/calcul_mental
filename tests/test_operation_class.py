@@ -191,9 +191,9 @@ class TestMul(unittest.TestCase):
 
             self.assertEqual(2, len(xy))
 
-            self.assertNotIn(xy, history)
-
             history.add(xy)
+
+        self.assertGreaterEqual(len(history), n_repeat - 1)
 
     def test_get_question_string(self):
         result = self.ob.get_question_string()
