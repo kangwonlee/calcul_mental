@@ -82,9 +82,13 @@ class TestCancelFraction(unittest.TestCase):
         input_str = f"{num}/{den}"
 
         result = self.ob.eval_answer(input_str)
-        expected = fractions.Fraction(num, den)
 
-        self.assertEqual(expected, result)
+        self.assertIsInstance(result, (list, tuple))
+
+        expected_fraction = fractions.Fraction(num, den)
+        expected = expected_fraction.numerator, expected_fraction.denominator,
+
+        self.assertSequenceEqual(expected, result)
 
     def test_eval_answer_front_space(self):
         num = 3
@@ -92,9 +96,13 @@ class TestCancelFraction(unittest.TestCase):
         input_str = f"{num} /{den}"
 
         result = self.ob.eval_answer(input_str)
-        expected = fractions.Fraction(num, den)
 
-        self.assertEqual(expected, result)
+        self.assertIsInstance(result, (list, tuple))
+
+        expected_fraction = fractions.Fraction(num, den)
+        expected = expected_fraction.numerator, expected_fraction.denominator,
+
+        self.assertSequenceEqual(expected, result)
 
     def test_eval_answer_both_spaces(self):
         num = 3
@@ -102,9 +110,13 @@ class TestCancelFraction(unittest.TestCase):
         input_str = f"{num} / {den}"
 
         result = self.ob.eval_answer(input_str)
-        expected = fractions.Fraction(num, den)
 
-        self.assertEqual(expected, result)
+        self.assertIsInstance(result, (list, tuple))
+
+        expected_fraction = fractions.Fraction(num, den)
+        expected = expected_fraction.numerator, expected_fraction.denominator,
+
+        self.assertSequenceEqual(expected, result)
 
     def test_eval_answer_rear_space(self):
         num = 3
@@ -112,9 +124,13 @@ class TestCancelFraction(unittest.TestCase):
         input_str = f"{num}/ {den}"
 
         result = self.ob.eval_answer(input_str)
-        expected = fractions.Fraction(num, den)
 
-        self.assertEqual(expected, result)
+        self.assertIsInstance(result, (list, tuple))
+
+        expected_fraction = fractions.Fraction(num, den)
+        expected = expected_fraction.numerator, expected_fraction.denominator,
+
+        self.assertSequenceEqual(expected, result)
 
     def test_is_answer_correct_correct(self):
         num = 3
@@ -178,8 +194,10 @@ class TestCancelFraction(unittest.TestCase):
 
         self.ob.question = (num * pick, den * pick)
 
-        incorrect_answer = fractions.Fraction(num + 1, den)
+        incorrect_answer = fractions.Fraction(num - 1, den)
         incorrect_answer_str = str(incorrect_answer)
+
+        self.assertIn('/', incorrect_answer_str)
 
         result = self.ob.is_answer_correct(incorrect_answer_str)
 
