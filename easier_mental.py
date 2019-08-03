@@ -63,6 +63,9 @@ class OperationBase(object):
 
 
 class CancelFraction(OperationBase):
+    max_number = 5
+    except_these = (10,)
+
     def get_question(self):
         xy_set = set(self.get_random_numbers())
 
