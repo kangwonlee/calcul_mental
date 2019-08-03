@@ -42,8 +42,6 @@ class TestCancelFraction(unittest.TestCase):
     def test_get_question(self):
         n_repeat = 5
 
-        history = set()
-
         for _ in itertools.repeat(None, n_repeat):
             xy = self.ob.get_question()
 
@@ -51,9 +49,17 @@ class TestCancelFraction(unittest.TestCase):
 
             self.assertNotEqual(xy[0], xy[1])
 
-            self.assertNotIn(xy, history)
+            msg_range = ("\n"
+                f"{self.ob.min_number ** 2} <= xy = {xy} <= {self.ob.max_number ** 2}"
+                )
 
-            history.add(xy)
+            self.assertLessEqual(xy[0], self.ob.max_number ** 2, msg=msg_range)
+
+            self.assertGreaterEqual(xy[0], self.ob.min_number ** 2, msg=msg_range)
+
+            self.assertLessEqual(xy[1], self.ob.max_number ** 2, msg=msg_range)
+
+            self.assertGreaterEqual(xy[1], self.ob.min_number ** 2, msg=msg_range)
 
     def test_get_question_string(self):
         result = self.ob.get_question_string()
@@ -76,9 +82,13 @@ class TestCancelFraction(unittest.TestCase):
         input_str = f"{num}/{den}"
 
         result = self.ob.eval_answer(input_str)
-        expected = fractions.Fraction(num, den)
 
-        self.assertEqual(expected, result)
+        self.assertIsInstance(result, (list, tuple))
+
+        expected_fraction = fractions.Fraction(num, den)
+        expected = expected_fraction.numerator, expected_fraction.denominator,
+
+        self.assertSequenceEqual(expected, result)
 
     def test_eval_answer_front_space(self):
         num = 3
@@ -86,9 +96,13 @@ class TestCancelFraction(unittest.TestCase):
         input_str = f"{num} /{den}"
 
         result = self.ob.eval_answer(input_str)
-        expected = fractions.Fraction(num, den)
 
-        self.assertEqual(expected, result)
+        self.assertIsInstance(result, (list, tuple))
+
+        expected_fraction = fractions.Fraction(num, den)
+        expected = expected_fraction.numerator, expected_fraction.denominator,
+
+        self.assertSequenceEqual(expected, result)
 
     def test_eval_answer_both_spaces(self):
         num = 3
@@ -96,9 +110,13 @@ class TestCancelFraction(unittest.TestCase):
         input_str = f"{num} / {den}"
 
         result = self.ob.eval_answer(input_str)
-        expected = fractions.Fraction(num, den)
 
-        self.assertEqual(expected, result)
+        self.assertIsInstance(result, (list, tuple))
+
+        expected_fraction = fractions.Fraction(num, den)
+        expected = expected_fraction.numerator, expected_fraction.denominator,
+
+        self.assertSequenceEqual(expected, result)
 
     def test_eval_answer_rear_space(self):
         num = 3
@@ -106,9 +124,13 @@ class TestCancelFraction(unittest.TestCase):
         input_str = f"{num}/ {den}"
 
         result = self.ob.eval_answer(input_str)
-        expected = fractions.Fraction(num, den)
 
-        self.assertEqual(expected, result)
+        self.assertIsInstance(result, (list, tuple))
+
+        expected_fraction = fractions.Fraction(num, den)
+        expected = expected_fraction.numerator, expected_fraction.denominator,
+
+        self.assertSequenceEqual(expected, result)
 
     def test_is_answer_correct_correct(self):
         num = 3
@@ -152,6 +174,19 @@ class TestCancelFraction(unittest.TestCase):
 
         self.assertFalse(result)
 
+    def test_is_answer_correct_incorrect_num_den_multiplied(self):
+        num = 3
+        den = 4
+        pick = 5
+
+        self.ob.question = (num * pick, den * pick)
+
+        incorrect_answer_str = f"{num * 2} / {den * 2}"
+
+        result = self.ob.is_answer_correct(incorrect_answer_str)
+
+        self.assertFalse(result)
+
     def test_is_answer_correct_incorrect_num(self):
         num = 3
         den = 4
@@ -159,8 +194,10 @@ class TestCancelFraction(unittest.TestCase):
 
         self.ob.question = (num * pick, den * pick)
 
-        incorrect_answer = fractions.Fraction(num + 1, den)
+        incorrect_answer = fractions.Fraction(num - 1, den)
         incorrect_answer_str = str(incorrect_answer)
+
+        self.assertIn('/', incorrect_answer_str)
 
         result = self.ob.is_answer_correct(incorrect_answer_str)
 
@@ -175,13 +212,19 @@ class TestMul(unittest.TestCase):
     def tearDown(self):
         del self.ob
 
-    def test_get_question(self):
-        n_repeat = 1000
+    def test_get_question_mul(self):
+        n_repeat = 5
+
+        history = set()
 
         for _ in itertools.repeat(None, n_repeat):
-            xy = self.ob.get_question()
+            xy = tuple(self.ob.get_question())
 
             self.assertEqual(2, len(xy))
+
+            history.add(xy)
+
+        self.assertGreaterEqual(len(history), n_repeat - 1)
 
     def test_get_question_string(self):
         result = self.ob.get_question_string()
@@ -258,6 +301,20 @@ class TestDiv(unittest.TestCase):
             xy = self.ob.get_question()
 
             self.assertEqual(2, len(xy))
+
+    def test_get_question_div(self):
+        n_repeat = 5
+
+        history = set()
+
+        for _ in itertools.repeat(None, n_repeat):
+            xy = tuple(self.ob.get_question())
+
+            self.assertEqual(2, len(xy))
+
+            self.assertNotIn(xy, history)
+
+            history.add(xy)
 
     def test_get_question_string(self):
         result = self.ob.get_question_string()
