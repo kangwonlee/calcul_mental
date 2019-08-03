@@ -42,18 +42,12 @@ class TestCancelFraction(unittest.TestCase):
     def test_get_question(self):
         n_repeat = 5
 
-        history = set()
-
         for _ in itertools.repeat(None, n_repeat):
             xy = self.ob.get_question()
 
             self.assertEqual(2, len(xy))
 
             self.assertNotEqual(xy[0], xy[1])
-
-            self.assertNotIn(xy, history)
-
-            history.add(xy)
 
     def test_get_question_string(self):
         result = self.ob.get_question_string()
@@ -175,13 +169,19 @@ class TestMul(unittest.TestCase):
     def tearDown(self):
         del self.ob
 
-    def test_get_question(self):
-        n_repeat = 1000
+    def test_get_question_mul(self):
+        n_repeat = 5
+
+        history = set()
 
         for _ in itertools.repeat(None, n_repeat):
-            xy = self.ob.get_question()
+            xy = tuple(self.ob.get_question())
 
             self.assertEqual(2, len(xy))
+
+            self.assertNotIn(xy, history)
+
+            history.add(xy)
 
     def test_get_question_string(self):
         result = self.ob.get_question_string()
@@ -258,6 +258,20 @@ class TestDiv(unittest.TestCase):
             xy = self.ob.get_question()
 
             self.assertEqual(2, len(xy))
+
+    def test_get_question_div(self):
+        n_repeat = 5
+
+        history = set()
+
+        for _ in itertools.repeat(None, n_repeat):
+            xy = tuple(self.ob.get_question())
+
+            self.assertEqual(2, len(xy))
+
+            self.assertNotIn(xy, history)
+
+            history.add(xy)
 
     def test_get_question_string(self):
         result = self.ob.get_question_string()
