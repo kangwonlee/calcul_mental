@@ -63,6 +63,9 @@ class OperationBase(object):
 
 
 class CancelFraction(OperationBase):
+    max_number = 5
+    except_these = (10,)
+
     def get_question(self):
         xy_set = set(self.get_random_numbers())
 
@@ -85,14 +88,15 @@ class CancelFraction(OperationBase):
     @staticmethod
     def eval_answer(answer_str):
 
-        stripped = answer_str.strip()
-        removed_front_space = re.sub('\\s/', '/', stripped)
-        removed_rear_space = re.sub('/\\s', '/', removed_front_space)
+        num_str, den_str = answer_str.split('/')
+        num = int(float(num_str))
+        den = int(float(den_str))
 
-        return fractions.Fraction(removed_rear_space)
+        return num, den
 
     def get_answer(self):
-        return fractions.Fraction(self.question[0], self.question[1])
+        fr = fractions.Fraction(self.question[0], self.question[1])
+        return fr.numerator, fr.denominator
 
 
 class Mul(OperationBase):
