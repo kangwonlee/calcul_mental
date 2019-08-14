@@ -83,7 +83,18 @@ class CancelFraction(OperationBase):
         return question
 
     def get_question_string(self):
-        return f"{self.question[0]}/{self.question[1]}"
+
+        numerator_str = str(self.question[0])
+        denuminator_str = str(self.question[1])
+
+        number_width = max((len(numerator_str), len(denuminator_str)))
+
+        number_formatter = f" %{number_width}d "
+        h_bar = '-' * len(number_formatter)
+
+        formatter = '\n'.join((number_formatter, h_bar, number_formatter))
+
+        return formatter % self.question[:2]
 
     @staticmethod
     def eval_answer(answer_str):
