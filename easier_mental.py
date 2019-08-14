@@ -52,7 +52,12 @@ class OperationBase(object):
         return input(self.get_question_string() + ' = ? ')
 
     def is_answer_correct(self, answer_str):
-        result = self.eval_answer(answer_str)
+
+        try:
+            result = self.eval_answer(answer_str)
+        except ValueError:
+            result = None
+
         expected = self.get_answer()
 
         return expected == result
