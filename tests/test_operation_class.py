@@ -1,10 +1,13 @@
 import fractions
 import itertools
 import os
+import re
 import sys
 import unittest
 
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)))
+
 
 import easier_mental
 
@@ -66,10 +69,14 @@ class TestCancelFraction(unittest.TestCase):
 
         self.assertIsInstance(result, str)
 
-        num_str, den_str = result.split('/')
+        found = re.findall (r"\s+(\d+)\s+-+\s+(\d+)\s", result, re.M)
+
+        self.assertTrue(found, f"\nresult = {result}\nfound = {found}")
+
+        num_str, den_str = found[0]
 
         msg = '\n'.join([
-            f"\nresult = {result}",
+            f"\nresult = {repr(result)}",
             f"question = {self.ob.question}"
         ])
 
@@ -203,6 +210,13 @@ class TestCancelFraction(unittest.TestCase):
 
         self.assertFalse(result)
 
+    def test_is_answer_correct_just_enter(self):
+        null_str = f""
+
+        result = self.ob.is_answer_correct(null_str)
+
+        self.assertFalse(result)
+
 
 class TestMul(unittest.TestCase):
 
@@ -258,6 +272,13 @@ class TestMul(unittest.TestCase):
         expected = num
 
         self.assertEqual(expected, result)
+
+    def test_is_answer_correct_just_enter(self):
+        null_str = f""
+
+        result = self.ob.is_answer_correct(null_str)
+
+        self.assertFalse(result)
 
     def test_is_answer_correct_correct(self):
         a = 3
@@ -372,6 +393,13 @@ class TestDiv(unittest.TestCase):
         incorrect_answer_str = str(incorrect_answer)
 
         result = self.ob.is_answer_correct(incorrect_answer_str)
+
+        self.assertFalse(result)
+
+    def test_is_answer_correct_just_enter(self):
+        null_str = f""
+
+        result = self.ob.is_answer_correct(null_str)
 
         self.assertFalse(result)
 
