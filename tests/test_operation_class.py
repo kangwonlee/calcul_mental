@@ -1,10 +1,13 @@
 import fractions
 import itertools
 import os
+import re
 import sys
 import unittest
 
+
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)))
+
 
 import easier_mental
 
@@ -66,10 +69,14 @@ class TestCancelFraction(unittest.TestCase):
 
         self.assertIsInstance(result, str)
 
-        num_str, den_str = result.split('/')
+        found = re.findall (r"\s+(\d+)\s+-+\s+(\d+)\s", result, re.M)
+
+        self.assertTrue(found, f"\nresult = {result}\nfound = {found}")
+
+        num_str, den_str = found[0]
 
         msg = '\n'.join([
-            f"\nresult = {result}",
+            f"\nresult = {repr(result)}",
             f"question = {self.ob.question}"
         ])
 
