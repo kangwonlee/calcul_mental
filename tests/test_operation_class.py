@@ -210,6 +210,13 @@ class TestCancelFraction(unittest.TestCase):
 
         self.assertFalse(result)
 
+    def test_is_answer_correct_just_enter(self):
+        null_str = f""
+
+        result = self.ob.is_answer_correct(null_str)
+
+        self.assertFalse(result)
+
 
 class TestMul(unittest.TestCase):
 
@@ -265,6 +272,13 @@ class TestMul(unittest.TestCase):
         expected = num
 
         self.assertEqual(expected, result)
+
+    def test_is_answer_correct_just_enter(self):
+        null_str = f""
+
+        result = self.ob.is_answer_correct(null_str)
+
+        self.assertFalse(result)
 
     def test_is_answer_correct_correct(self):
         a = 3
@@ -379,6 +393,13 @@ class TestDiv(unittest.TestCase):
         incorrect_answer_str = str(incorrect_answer)
 
         result = self.ob.is_answer_correct(incorrect_answer_str)
+
+        self.assertFalse(result)
+
+    def test_is_answer_correct_just_enter(self):
+        null_str = f""
+
+        result = self.ob.is_answer_correct(null_str)
 
         self.assertFalse(result)
 
