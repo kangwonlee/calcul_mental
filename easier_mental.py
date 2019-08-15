@@ -1,4 +1,5 @@
 import fractions
+import os
 import pprint
 import random
 import re
@@ -6,7 +7,6 @@ import time
 
 
 class OperationBase(object):
-
     min_number = 2
     max_number = 9
     except_these = (5, 10)
@@ -182,6 +182,7 @@ def main():
 
 def did_great(this_one, doing_great, smily_face='^3^'):
     print(f'Correct {smily_face}')
+    os.system('printf \a')
     this_one['result'] = 'correct'
 
     return doing_great + 1
